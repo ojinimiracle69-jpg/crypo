@@ -215,12 +215,20 @@ function getAutomaticTheme() {
   return hour >= 6 && hour < 18 ? 'light' : 'dark';
 }
 
+// Reusable icon for cryptocurrency assets.
+function Icon({ children, className = '' }) {
+  return <span className={`asset-icon ${className}`}>{children}</span>;
+}
+
 // Send requests to the backend and handle unsuccessful responses.
 async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options,
-  });
+  const response = await fetch(
+    `https://cryptora-backend-fuh1.onrender.com/api${path}`,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      ...options,
+    },
+  );
 
   const result = await response.json();
 
@@ -229,11 +237,6 @@ async function api(path, options = {}) {
   }
 
   return result;
-}
-
-// Reusable icon for cryptocurrency assets.
-function Icon({ children, className = '' }) {
-  return <span className={`asset-icon ${className}`}>{children}</span>;
 }
 
 function App() {
