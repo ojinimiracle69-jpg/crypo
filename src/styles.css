@@ -1,19 +1,38 @@
 :root {
   font-family: 'DM Sans', sans-serif;
-  color: #eef2f6;
-  background: #0c1118;
+  color: var(--text);
+  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-optical-sizing: auto;
+
+  /* Main theme colours */
   --bg: #0c1118;
   --panel: #111821;
   --border: #222d39;
   --text: #eef2f6;
   --muted: #85919e;
+
+  /* Brand and status colours */
   --green: #51d6a2;
   --red: #f17c83;
   --lime: #b7ed76;
+}
+/* =========================================
+   LIGHT THEME — CRYPTORA BRAND PALETTE
+   ========================================= */
+:root[data-theme='light'] {
+  --bg: #e7ebef;
+  --panel: #f5f7f9;
+  --border: #cbd3dc;
+  --text: #26323a;
+  --muted: #52616d;
+
+  /* Darker versions of the original brand colours */
+  --green: #218b68;
+  --red: #c94f5b;
+  --lime: #547c20;
 }
 * {
   box-sizing: border-box;
@@ -45,6 +64,8 @@ button {
   display: flex;
   flex-direction: column;
   z-index: 10;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .brand {
   display: flex;
@@ -184,6 +205,18 @@ button {
 .help-link {
   margin-bottom: 3px;
 }
+/* Help center message shown inside the mobile sidebar */
+.sidebar-help-message {
+  display: none;
+  margin: 12px 0 10px 31px;
+  padding: 10px 11px;
+  border: 1px solid #3a5644;
+  border-radius: 7px;
+  background: #17251e;
+  color: #c8f0b0;
+  font-size: 11px;
+  line-height: 1.45;
+}
 .profile {
   border-top: 1px solid #222d38;
   margin-top: 13px;
@@ -239,8 +272,13 @@ button {
   color: #7e8b98;
 }
 .crumb span {
-  padding: 0 9px;
+  padding: 0;
   color: #47535e;
+}
+/* Add spacing around the breadcrumb separator on larger screens */
+.crumb-separator {
+  display: inline-block;
+  margin: 0 9px;
 }
 .crumb strong {
   color: #dae0e6;
@@ -262,7 +300,7 @@ button {
 .menu-toggle {
   border: 0;
   background: none;
-  color: #9ba7b2;
+  color: #11283d;
   font-size: 19px;
   position: relative;
 }
@@ -370,11 +408,20 @@ button {
   position: relative;
   z-index: 1;
 }
+/* Performance percentage badge */
 .change-badge {
-  color: var(--green);
-  background: #173027;
-  border-radius: 4px;
-  padding: 3px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #75c3a2;
+  background: #263d37;
+  border: 1px solid #263d37;
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 .sparkline {
   width: 68px;
@@ -394,6 +441,9 @@ button {
     sans-serif;
   letter-spacing: -0.5px;
   margin-top: 16px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 .stat-amount small {
   font:
@@ -526,15 +576,36 @@ button {
 .chart-panel {
   margin-bottom: 15px;
 }
+
+.chart-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .chart-select {
   appearance: none;
+  -webkit-appearance: none;
   background: #151e28;
   border: 1px solid #293540;
   border-radius: 5px;
   color: #d3dbe2;
-  padding: 8px 10px;
+  padding: 8px 30px 8px 10px;
   font-size: 10px;
+  cursor: pointer;
 }
+
+.chart-select-wrapper svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  color: #d3dbe2;
+}
+
 .chart-price {
   display: flex;
   align-items: baseline;
@@ -643,10 +714,7 @@ button {
 .data-table tbody tr:last-child td {
   border-bottom: 0;
 }
-.data-table th:first-child,
-.data-table td:first-child {
-  padding-left: 2px;
-}
+
 .coin-cell {
   display: flex;
   align-items: center;
@@ -743,8 +811,13 @@ button {
   border-radius: 5px;
   padding: 0 10px;
 }
+
+.select-control {
+  position: relative;
+}
 .select-control select {
   appearance: none;
+  -webkit-appearance: none;
   background: none;
   color: #e0e6eb;
   border: 0;
@@ -752,6 +825,7 @@ button {
   font-size: 10px;
   width: 100%;
   padding-left: 8px;
+  padding-right: 30px;
   cursor: pointer;
 }
 .select-control option,
@@ -1181,4 +1255,1221 @@ button {
   color: #c8f0b0;
   font-size: 12px;
   box-shadow: 0 12px 35px #0007;
+}
+
+/* Light theme overrides: membership and notifications */
+:root[data-theme='light'] .member-stats small {
+  color: #667580;
+}
+
+:root[data-theme='light'] .member-feature > span {
+  color: #527a22;
+}
+
+:root[data-theme='light'] .member-feature p {
+  color: #667580;
+}
+
+:root[data-theme='light'] .membership-footnote {
+  color: #667580;
+}
+
+:root[data-theme='light'] .toast {
+  border-color: #b8d9c6;
+  background: #f0f8f3;
+  color: #245d40;
+  box-shadow: 0 12px 35px #26323a18;
+}
+
+/* Header theme selector */
+.theme-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  white-space: nowrap;
+}
+
+.theme-selector-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.theme-selector select {
+  max-width: 105px;
+  padding: 4px 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  outline: none;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  accent-color: var(--green);
+}
+
+.theme-selector select:focus-visible {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px #51d6a233;
+}
+
+.theme-selector select option {
+  background: var(--panel);
+  color: var(--text);
+}
+
+/* Market Performance chart colours */
+:root {
+  --chart-line: #b4e980;
+  --chart-fill: #aee77c;
+}
+
+/* Darker chart colours for the light theme */
+:root[data-theme='light'] {
+  --chart-line: #527f28;
+  --chart-fill: #709d32;
+}
+
+/* Keep the balance card content from overlapping */
+.balance-card {
+  min-width: 0;
+}
+
+.balance-card .stat-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+}
+
+.balance-card .stat-meta > span {
+  min-width: 0;
+}
+
+.balance-card .sparkline.large {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 42px;
+  margin-top: 10px;
+}
+
+/* Improve muted text contrast in the light theme */
+:root[data-theme='light'] {
+  --muted: #4f606c;
+}
+
+:root[data-theme='light'] .stat-label,
+:root[data-theme='light'] .stat-meta,
+:root[data-theme='light'] .sub-meta,
+:root[data-theme='light'] .chart-y-labels,
+:root[data-theme='light'] .chart-x-labels,
+:root[data-theme='light'] .membership-footnote,
+:root[data-theme='light'] .member-stats small,
+:root[data-theme='light'] .member-feature p {
+  color: #4f606c;
+}
+
+/* Improve secondary text contrast throughout Light mode */
+:root[data-theme='light'] .side-label,
+:root[data-theme='light'] .eyebrow,
+:root[data-theme='light'] .nav-item,
+:root[data-theme='light'] .nav-icon,
+:root[data-theme='light'] .market-open,
+:root[data-theme='light'] .crumb,
+:root[data-theme='light'] .page-heading p,
+:root[data-theme='light'] .stat-label,
+:root[data-theme='light'] .stat-meta,
+:root[data-theme='light'] .balance-amount small,
+:root[data-theme='light'] .stat-amount small,
+:root[data-theme='light'] .sub-meta,
+:root[data-theme='light'] .allocation-note,
+:root[data-theme='light'] .position-list,
+:root[data-theme='light'] .empty-position,
+:root[data-theme='light'] .chart-y-labels,
+:root[data-theme='light'] .chart-x-labels,
+:root[data-theme='light'] .chart-price small,
+:root[data-theme='light'] .data-table th,
+:root[data-theme='light'] .coin-cell small,
+:root[data-theme='light'] .no-results,
+:root[data-theme='light'] .activity-table td,
+:root[data-theme='light'] .activity-count,
+:root[data-theme='light'] .empty-state,
+:root[data-theme='light'] .empty-state p,
+:root[data-theme='light'] .trade-info > p,
+:root[data-theme='light'] .muted-copy,
+:root[data-theme='light'] .field-label,
+:root[data-theme='light'] .amount-control,
+:root[data-theme='light'] .amount-control b,
+:root[data-theme='light'] .quick-amounts button,
+:root[data-theme='light'] .order-estimate,
+:root[data-theme='light'] .order-estimate strong,
+:root[data-theme='light'] .fine-print,
+:root[data-theme='light'] .footer,
+:root[data-theme='light'] .footer button,
+:root[data-theme='light'] .member-stats small,
+:root[data-theme='light'] .member-feature p,
+:root[data-theme='light'] .membership-footnote,
+:root[data-theme='light'] .sandbox-card p,
+:root[data-theme='light'] .profile small,
+:root[data-theme='light'] .profile-more {
+  color: #43535f;
+}
+/* Center Total Demo Balance content inside its card */
+.balance-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.balance-card .stat-label,
+.balance-card .balance-amount,
+.balance-card .stat-meta {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.balance-card .stat-meta {
+  margin-top: 0;
+}
+
+/* Keep the dashboard cards compact and centred */
+.stats-grid {
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centre the content in Available to trade and Cash allocation */
+.stats-grid > .stat-card:not(.balance-card) {
+  text-align: center;
+}
+
+.stats-grid > .stat-card:not(.balance-card) .stat-label,
+.stats-grid > .stat-card:not(.balance-card) .stat-meta,
+.stats-grid > .stat-card:not(.balance-card) .sub-meta,
+.stats-grid > .stat-card:not(.balance-card) .position-list,
+.stats-grid > .stat-card:not(.balance-card) .allocation-note {
+  justify-content: center;
+}
+
+/* Currency selector on the total balance card */
+.currency-picker-trigger {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font:
+    600 12px 'Manrope',
+    sans-serif;
+  letter-spacing: 0;
+  padding: 4px 5px;
+  margin-left: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.currency-picker-trigger:hover,
+.currency-picker-trigger:focus-visible {
+  color: var(--text);
+  background: #ffffff12;
+  outline: none;
+}
+.currency-picker-chevron {
+  position: relative;
+  top: 2px;
+  transition: transform 0.2s ease;
+}
+
+.currency-picker-chevron.is-open {
+  transform: translateY(2px) rotate(180deg);
+}
+
+.currency-picker-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: min(280px, 85vw);
+  z-index: 50;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 12px 32px #0003;
+}
+
+.currency-picker-search {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.currency-picker-search:focus {
+  border-color: var(--green);
+}
+
+.currency-picker-list {
+  max-height: 230px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.currency-picker-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.currency-picker-option:hover {
+  background: #ffffff0d;
+}
+
+.currency-picker-option > span:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.currency-picker-option strong {
+  font-size: 12px;
+}
+
+.currency-picker-option small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.currency-picker-option > span:last-child {
+  color: var(--green);
+  font-size: 14px;
+}
+
+:root[data-theme='light'] .currency-picker-trigger:hover,
+:root[data-theme='light'] .currency-picker-option:hover {
+  background: #0000000b;
+}
+/* Keep the currency dropdown visible outside the balance card */
+.balance-card {
+  overflow: visible;
+  z-index: 5;
+}
+/* Separate the default currency shortcut from the currency list */
+.default-currency-option {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+}
+.asset-picker-chevron {
+  flex-shrink: 0;
+  position: static;
+  transform: rotate(0deg);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.asset-picker-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* ===== Market Performance dropdown ===== */
+
+.chart-select-wrapper {
+  position: relative;
+}
+
+.chart-select-wrapper .chart-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 145px;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.chart-dropdown-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chart-dropdown-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.chart-select-menu,
+.asset-select-menu {
+  position: absolute;
+  z-index: 30;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 12px 28px #0004;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.chart-select-menu {
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 190px;
+}
+
+.chart-select-option,
+.asset-select-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text);
+  font-size: 11px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chart-select-option > span:nth-child(2),
+.asset-select-option > span:nth-child(2) {
+  flex: 1;
+}
+
+.chart-select-option > span:last-child,
+.asset-select-option > span:last-child {
+  color: var(--green);
+}
+
+.chart-select-option:hover,
+.asset-select-option:hover,
+.chart-select-option.selected,
+.asset-select-option.selected {
+  background: #ffffff10;
+}
+/* ===== Quick Trade dropdown ===== */
+
+.select-control {
+  position: relative;
+}
+
+.asset-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 0 0 8px;
+  border: 0;
+  background: transparent;
+  color: #d3dbe2;
+  font-size: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.asset-select-trigger > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asset-picker-chevron {
+  flex-shrink: 0;
+  position: static;
+  transform: none;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.asset-picker-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.asset-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 12px 28px #0004;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+:root[data-theme='light'] .chart-select-option:hover,
+:root[data-theme='light'] .asset-select-option:hover,
+:root[data-theme='light'] .chart-select-option.selected,
+:root[data-theme='light'] .asset-select-option.selected {
+  background: #0000000b;
+}
+/* ===== Dashboard cards: visual refinements ===== */
+
+/* Make the total demo balance more prominent */
+.balance-amount {
+  font-size: 29px;
+  line-height: 1.3;
+}
+
+/* Center and shorten the balance chart */
+.balance-card .sparkline.large {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 68%;
+  height: 30px;
+  bottom: 5px;
+}
+
+/* Center the content in the other two dashboard cards */
+.stats-grid > .stat-card:not(.balance-card) {
+  text-align: center;
+}
+
+.stats-grid > .stat-card:not(.balance-card) .stat-label,
+.stats-grid > .stat-card:not(.balance-card) .stat-meta,
+.stats-grid > .stat-card:not(.balance-card) .sub-meta,
+.stats-grid > .stat-card:not(.balance-card) .position-list,
+.stats-grid > .stat-card:not(.balance-card) .allocation-note {
+  justify-content: center;
+}
+
+/* Shorten and center the green allocation bar */
+.allocation {
+  width: 70%;
+  margin: 12px auto 0;
+}
+
+/* Make asset information easier to read */
+.position-list {
+  font-weight: 600;
+}
+/* ===== Dashboard card refinements ===== */
+
+/* Center the green zigzag inside Total Demo Balance */
+.stats-grid:not(.wallet-stats) > .stat-card:first-child .balance-zigzag {
+  display: block;
+  width: 68%;
+  height: 34px;
+  margin: 14px auto 0;
+}
+
+/* Keep Available to Trade amount at a consistent size. */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .stat-amount {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+/* Bring the currency symbol and currency name closer together */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .sub-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Prevent the currency code from being pushed to the far right */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .sub-meta .right {
+  margin-left: 0;
+}
+
+/* Make the currency symbol a little more visible */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .cash-dot {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Keep the green allocation bar short and centered */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .allocation {
+  width: 58%;
+  margin: 14px auto 0;
+}
+
+/* Give the allocation description more presence */
+.stats-grid:not(.wallet-stats) > .stat-card:nth-child(2) .allocation-note {
+  justify-content: center;
+  font-size: 12px;
+  margin-top: 12px;
+}
+/* ===== Dark theme: lighter surfaces and clearer contrast ===== */
+
+html[data-theme='dark'] body {
+  background-color: #151e27;
+}
+
+html[data-theme='dark'] .topbar,
+html[data-theme='dark'] .sidebar {
+  background-color: #19232d;
+  border-color: #2b3946;
+}
+
+html[data-theme='dark'] .stat-card,
+html[data-theme='dark'] .panel {
+  background-color: #202c37;
+  border-color: #344451;
+}
+
+/* Keep Total Demo Balance's original label styling */
+html[data-theme='dark'] .stat-card:not(.balance-card) .stat-label,
+html[data-theme='dark'] .panel-heading h2 {
+  color: #e5edf3;
+}
+
+/* Make the demo-funds note more visible without changing the balance */
+.balance-card .stat-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.balance-card .stat-meta > span:last-child {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 1px solid rgba(49, 150, 111, 0.3);
+  border-radius: 10px;
+  background: rgba(49, 150, 111, 0.12);
+  color: #b9d9c9;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Keep the dashboard card text clear against the lighter surfaces */
+html[data-theme='dark'] .stat-card .stat-label,
+html[data-theme='dark'] .panel-heading h2 {
+  color: #e5edf3;
+}
+
+/* ===== Dropdowns: dark theme ===== */
+
+html[data-theme='dark'] .currency-picker-menu,
+html[data-theme='dark'] [class*='dropdown-menu'],
+html[data-theme='dark'] [class*='select-menu'],
+html[data-theme='dark'] [class*='picker-menu'] {
+  color: #e5edf3;
+  background-color: #202c37;
+  border-color: #3a4a58;
+}
+
+html[data-theme='dark'] .currency-picker-option,
+html[data-theme='dark'] [class*='dropdown-menu'] button,
+html[data-theme='dark'] [class*='select-menu'] button,
+html[data-theme='dark'] [class*='picker-menu'] button {
+  color: #e5edf3;
+  background-color: transparent;
+}
+
+html[data-theme='dark'] .currency-picker-option:hover,
+html[data-theme='dark'] [class*='dropdown-menu'] button:hover,
+html[data-theme='dark'] [class*='select-menu'] button:hover,
+html[data-theme='dark'] [class*='picker-menu'] button:hover {
+  background-color: #2d3c49;
+}
+
+html[data-theme='dark'] .currency-picker-option small {
+  color: #a8b7c4;
+}
+
+/* ===== Dropdowns: light theme ===== */
+
+html[data-theme='light'] .currency-picker-menu,
+html[data-theme='light'] [class*='dropdown-menu'],
+html[data-theme='light'] [class*='select-menu'],
+html[data-theme='light'] [class*='picker-menu'] {
+  color: #263543;
+  background-color: #ffffff;
+  border-color: #d9e2e9;
+}
+
+html[data-theme='light'] .currency-picker-option,
+html[data-theme='light'] [class*='dropdown-menu'] button,
+html[data-theme='light'] [class*='select-menu'] button,
+html[data-theme='light'] [class*='picker-menu'] button {
+  color: #263543;
+  background-color: transparent;
+}
+
+html[data-theme='light'] .currency-picker-option:hover,
+html[data-theme='light'] [class*='dropdown-menu'] button:hover,
+html[data-theme='light'] [class*='select-menu'] button:hover,
+html[data-theme='light'] [class*='picker-menu'] button:hover {
+  background-color: #edf3f7;
+}
+
+html[data-theme='light'] .currency-picker-option small {
+  color: #71808d;
+}
+/* =========================================
+   CRYPTORA — THEME AND OVERVIEW POLISH
+   ========================================= */
+
+/* Performance indicator: display only, not clickable */
+.performance-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 7px 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+/* Market performance link */
+.performance-note-link {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  margin: 0;
+  color: var(--accent, #8b7cff);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.performance-note-link:hover {
+  color: var(--accent-hover, #a69aff);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.performance-note-link:focus-visible {
+  outline: 2px solid var(--accent, #8b7cff);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+/* Keep the percentage and its link clearly separated */
+.stat-meta {
+  gap: 12px;
+}
+
+/* Cash allocation: create clear spacing between the label and percentage */
+.allocation-note {
+  gap: 8px;
+}
+
+/* =========================================
+   LIGHT THEME SIDEBAR
+   ========================================= */
+
+html[data-theme='light'] .sidebar,
+:root[data-theme='light'] .sidebar {
+  background: #ffffff;
+  color: #202536;
+  border-right: 1px solid #e5e7ef;
+}
+
+html[data-theme='light'] .sidebar .brand,
+:root[data-theme='light'] .sidebar .brand {
+  color: #202536;
+}
+
+html[data-theme='light'] .sidebar .side-label,
+:root[data-theme='light'] .sidebar .side-label {
+  color: #858ba0;
+}
+
+html[data-theme='light'] .sidebar .nav-item,
+:root[data-theme='light'] .sidebar .nav-item {
+  color: #626a7d;
+  background: transparent;
+}
+
+html[data-theme='light'] .sidebar .nav-item:hover,
+:root[data-theme='light'] .sidebar .nav-item:hover {
+  color: #292d40;
+  background: #f2f3f9;
+}
+
+html[data-theme='light'] .sidebar .nav-item.active,
+:root[data-theme='light'] .sidebar .nav-item.active {
+  color: #6253d9;
+  background: #eeecff;
+}
+
+html[data-theme='light'] .sidebar .sidebar-bottom,
+:root[data-theme='light'] .sidebar .sidebar-bottom {
+  border-top-color: #e5e7ef;
+}
+
+/* =========================================
+   DARK THEME SIDEBAR — ORIGINAL CRYPTORA PALETTE
+   ========================================= */
+
+html[data-theme='dark'] .sidebar,
+:root[data-theme='dark'] .sidebar {
+  background: #0e141c;
+  color: #f3f5f8;
+  border-right: 1px solid #1c2631;
+}
+
+html[data-theme='dark'] .sidebar .brand,
+:root[data-theme='dark'] .sidebar .brand {
+  color: #f3f5f8;
+}
+
+html[data-theme='dark'] .sidebar .nav-item,
+:root[data-theme='dark'] .sidebar .nav-item {
+  color: #94a0ad;
+  background: transparent;
+}
+
+html[data-theme='dark'] .sidebar .nav-item:hover,
+:root[data-theme='dark'] .sidebar .nav-item:hover {
+  color: #eaf0f5;
+  background: #18222d;
+}
+
+html[data-theme='dark'] .sidebar .nav-item.active,
+:root[data-theme='dark'] .sidebar .nav-item.active {
+  color: #c4f38b;
+  background: #1b272e;
+}
+
+html[data-theme='dark'] .sidebar .nav-icon,
+:root[data-theme='dark'] .sidebar .nav-icon {
+  color: #83909d;
+}
+
+html[data-theme='dark'] .sidebar .nav-item.active .nav-icon,
+:root[data-theme='dark'] .sidebar .nav-item.active .nav-icon {
+  color: var(--lime);
+}
+/* =========================================
+   MOBILE SIDEBAR BACKDROP
+   ========================================= */
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: rgba(5, 8, 18, 0.58);
+    cursor: pointer;
+  }
+
+  .sidebar {
+    z-index: 1001;
+  }
+}
+
+/* =========================================
+   LIGHT THEME — SIDEBAR AND MENU
+   ========================================= */
+
+html[data-theme='light'] .sidebar,
+:root[data-theme='light'] .sidebar {
+  background: #e0e5e9;
+  color: #26323a;
+  border-right: 1px solid #b5c0c9;
+}
+
+html[data-theme='light'] .sidebar .brand,
+:root[data-theme='light'] .sidebar .brand {
+  color: #26323a;
+}
+
+html[data-theme='light'] .sidebar .nav-item,
+:root[data-theme='light'] .sidebar .nav-item {
+  color: #43535f;
+  background: transparent;
+}
+
+html[data-theme='light'] .sidebar .nav-item:hover,
+:root[data-theme='light'] .sidebar .nav-item:hover {
+  color: #263543;
+  background: #edf3f7;
+}
+
+html[data-theme='light'] .sidebar .nav-item.active,
+:root[data-theme='light'] .sidebar .nav-item.active {
+  color: #547c20;
+  background: #d1dbe2;
+}
+
+html[data-theme='light'] .sidebar .nav-icon,
+:root[data-theme='light'] .sidebar .nav-icon {
+  color: #71808d;
+}
+
+html[data-theme='light'] .sidebar .nav-item.active .nav-icon,
+:root[data-theme='light'] .sidebar .nav-item.active .nav-icon {
+  color: #547c20;
+}
+
+html[data-theme='light'] .sidebar .sidebar-bottom,
+:root[data-theme='light'] .sidebar .sidebar-bottom {
+  border-top-color: #b5c0c9;
+}
+
+/* =========================================
+   LIGHT THEME — TEXT COLOUR REFINEMENTS
+   Text colours only; preserve existing surfaces.
+   ========================================= */
+
+/* Page heading, sidebar section labels and descriptions */
+:root[data-theme='light'] .side-label,
+:root[data-theme='light'] .eyebrow,
+:root[data-theme='light'] .page-heading p {
+  color: #43535f;
+}
+
+/* Current page name in the top breadcrumb */
+:root[data-theme='light'] .crumb strong {
+  color: #26323a;
+}
+
+/* Green-dot market status: darken text, preserve the dot */
+:root[data-theme='light'] .market-open {
+  color: #26323a;
+}
+
+/* Darker green for links while preserving the green identity */
+:root[data-theme='light'] .link-button,
+:root[data-theme='light'] .text-link,
+:root[data-theme='light'] .performance-note-link {
+  color: #547c20;
+}
+
+:root[data-theme='light'] .link-button:hover,
+:root[data-theme='light'] .text-link:hover,
+:root[data-theme='light'] .performance-note-link:hover {
+  color: #3f6018;
+}
+
+/* Positive performance text */
+:root[data-theme='light'] .change-badge,
+:root[data-theme='light'] .up {
+  color: #218b68 !important;
+}
+
+/* Cash allocation label and percentage */
+:root[data-theme='light'] .allocation-note,
+:root[data-theme='light'] .allocation-note b {
+  color: #43535f;
+}
+
+/* Asset names and tickers in Choose Assets */
+:root[data-theme='light'] .asset-select-trigger,
+:root[data-theme='light'] .asset-select-option,
+:root[data-theme='light'] .asset-select-option strong,
+:root[data-theme='light'] .asset-select-option small {
+  color: #26323a;
+}
+
+/* Asset names and tickers in the Market Performance dropdown */
+:root[data-theme='light'] .chart-select-option,
+:root[data-theme='light'] .chart-select-option strong,
+:root[data-theme='light'] .chart-select-option small {
+  color: #26323a;
+}
+
+/* Asset names and tickers in Market Overview and live prices */
+:root[data-theme='light'] .coin-cell strong,
+:root[data-theme='light'] .coin-cell small,
+:root[data-theme='light'] .price-row {
+  color: #26323a;
+}
+
+/* Improve USD symbol, amount and currency-code readability */
+:root[data-theme='light'] .amount-control,
+:root[data-theme='light'] .amount-control input,
+:root[data-theme='light'] .amount-control b {
+  color: #26323a;
+}
+
+:root[data-theme='light'] .amount-control input::placeholder {
+  color: #52616d;
+}
+/* Currency badge: circular symbols and wider code badges. */
+.sub-meta .cash-dot.cash-dot-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sub-meta .cash-dot.cash-dot-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 44px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+/* Smooth, noticeable entrance animation for each page. */
+.page-transition {
+  animation: page-drop-in 3.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top center;
+}
+
+@keyframes page-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-45px);
+    filter: blur(3px);
+  }
+
+  65% {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Respect visitors who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+    filter: none;
+    transform: none;
+  }
+}
+/* Clickable Total Demo Balance card */
+.balance-card-clickable {
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.balance-card-clickable:hover {
+  border-color: var(--green);
+}
+
+.balance-card-clickable:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* View Market Performance link */
+.market-performance-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.market-performance-link:hover {
+  color: var(--lime);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* View Market Performance link */
+.market-performance-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: #3f6018;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.market-performance-link:hover {
+  color: #3f6018;
+  text-decoration: none;
+}
+
+.market-performance-link:focus-visible {
+  outline: 2px solid #3f6018;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+/* Keep View Market Performance permanently green */
+html[data-theme='light'] .balance-card .stat-meta > span:last-child,
+html[data-theme='dark'] .balance-card .stat-meta > span:last-child,
+.balance-card .stat-meta > span:last-child {
+  color: #3f6018 !important;
+}
+
+html[data-theme='light'] .balance-card .stat-meta > span:last-child:hover,
+html[data-theme='dark'] .balance-card .stat-meta > span:last-child:hover,
+.balance-card .stat-meta > span:last-child:hover {
+  color: #3f6018 !important;
+  text-decoration: none !important;
+}
+/* View Market Performance — dark theme */
+html[data-theme='dark'] .balance-card .stat-meta > span:last-child,
+html[data-theme='dark'] .balance-card .stat-meta > span:last-child:hover {
+  color: #b9d9c9 !important;
+}
+/* Header icons — dark theme */
+html[data-theme='dark'] .icon-button,
+html[data-theme='dark'] .menu-toggle {
+  color: #e5edf5;
+}
+/* ===== Quick Trade: consistent text colours ===== */
+
+/* Asset name, ticker, and dropdown arrow */
+.order-panel .asset-select-trigger,
+.order-panel .asset-picker-chevron {
+  color: #d3dbe2 !important;
+}
+
+/* Amount entered by the user */
+.order-panel .amount-control input {
+  color: #e5edf3 !important;
+  -webkit-text-fill-color: #e5edf3;
+}
+
+/* Amount placeholder */
+.order-panel .amount-control input::placeholder {
+  color: #a0afbc !important;
+  -webkit-text-fill-color: #a0afbc;
+  opacity: 1;
+}
+
+/* Currency symbol and currency code */
+.order-panel .amount-control > span,
+.order-panel .amount-control > b {
+  color: #e5edf3 !important;
+}
+/* ===== Live demo prices: selected asset readability ===== */
+
+.trade-info .price-row.chosen,
+.trade-info .price-row.chosen .coin-cell,
+.trade-info .price-row.chosen .coin-cell strong,
+.trade-info .price-row.chosen .coin-cell small,
+.trade-info .price-row.chosen > span:last-child > strong,
+.trade-info .price-row.chosen > span:last-child > small:not(.up):not(.down) {
+  color: #e5edf3 !important;
+}
+
+/* Make positive percentage changes brighter */
+.trade-info .price-row.chosen .up {
+  color: #4ade80 !important;
+}
+/* ===== Sidebar scrollbar styling ===== */
+
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #9299a6 transparent;
+}
+
+/* Chrome, Edge, and other WebKit-based browsers */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #9299a6;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #697586;
+}
+/* Available to Trade amount */
+.stat-amount.available-trade-amount {
+  font-size: 17px !important;
 }
